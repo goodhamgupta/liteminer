@@ -98,6 +98,17 @@ func (m *Miner) receiveFromPool(conn MiningConn) {
 func (m *Miner) sendHeartBeats(conn MiningConn) {
 	// TODO: Students should send a StatusUpdate message every HEARTBEAT_FREQ
 	// while mining.
+	if m.IsShutdown.Load() {
+		conn.Conn.Close() // Close the connection
+		return
+	}
+	if m.Mining.Load() {
+		timer := time.Tick(time.Second)
+		res := StatusUpdateMsg(m.NumProcessed.Load())
+		for range timer {
+			SendMsg(conn, res)
+		}
+	}
 	return
 }
 
