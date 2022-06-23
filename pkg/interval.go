@@ -15,5 +15,9 @@ type Interval struct {
 // GenerateIntervals divides the range [0, upperBound] into numIntervals intervals.
 func GenerateIntervals(upperBound uint64, numIntervals int) (intervals []Interval) {
 	// TODO: Students should implement this.
+	var intervalSize uint64 = upperBound / uint64(numIntervals)
+	for i := 1; i <= numIntervals; i++ {
+		intervals = append(intervals, Interval{Lower: uint64(i - 1), Upper: uint64(i) * intervalSize})
+	}
 	return
 }
