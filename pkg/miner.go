@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"go.uber.org/atomic"
 	"io"
+	"math"
 	"net"
 	"time"
 )
@@ -119,6 +120,15 @@ func (m *Miner) sendHeartBeats(conn MiningConn) {
 func (m *Miner) Mine(data string, lower, upper uint64) (nonce uint64) {
 	// TODO: Students should implement this. Make sure to use the Hash method
 	// in hash.go
+	var current_min_hash = uint64(math.Inf(0))
+	for candidate_nonce := lower; candidate_nonce < upper; candidate_nonce++ {
+		result := Hash(data, candidate_nonce)
+		if result < current_min_hash {
+			current_min_hash = result
+			nonce = candidate_nonce
+		}
+		m.NumProcessed.Add(1)
+	}
 	return
 }
 
