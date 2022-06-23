@@ -69,26 +69,38 @@ func ProofOfWorkMsg(data string, nonce uint64, hash uint64) *Message {
 // pool while mining.
 func StatusUpdateMsg(numProcessed uint64) *Message {
 	// TODO: Students should implement this.
-	return &Message{}
+	return &Message{
+		Type:         StatusUpdate,
+		NumProcessed: numProcessed,
+	}
 }
 
 // Creates a MineRequest message – these messages are sent from a pool
 // to a miner when distributing work.
 func MineRequestMsg(data string, lower uint64, upper uint64) *Message {
 	// TODO: Students should implement this.
-	return &Message{}
+	return &Message{
+		Type:  MineRequest,
+		Data:  data,
+		Lower: lower,
+		Upper: upper,
+	}
 }
 
 // Creates a Transaction message – these messages are sent from a client to a
 // pool.
 func TransactionMsg(data string, upper uint64) *Message {
 	// TODO: Students should implement this.
-	return &Message{}
+	return &Message{
+		Type:  Transaction,
+		Data:  data,
+		Upper: upper,
+	}
 }
 
 // Creates a BusyPool message – these messages are sent from a busy pool to a
 // client trying to connect.
 func BusyPoolMsg() *Message {
 	// TODO: Students should implement this.
-	return &Message{}
+	return &Message{Type: BusyPool}
 }
