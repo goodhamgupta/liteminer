@@ -19,5 +19,9 @@ func GenerateIntervals(upperBound uint64, numIntervals int) (intervals []Interva
 	for i := 1; i <= numIntervals; i++ {
 		intervals = append(intervals, Interval{Lower: uint64(i - 1), Upper: uint64(i) * intervalSize})
 	}
+    // Clamp to upperBound
+    if intervals[numIntervals-1].Upper > upperBound {
+        intervals[numIntervals-1].Upper = upperBound
+    }
 	return
 }
